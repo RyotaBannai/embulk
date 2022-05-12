@@ -1,3 +1,9 @@
+exec:
+  guess_plugins: ['csv_all_strings']
+  preview_sample_buffer_bytes: 65536
+filters:
+  - type: column
+    drop_columns:
 in:
   type: file
   path_prefix: {{env.IN_FILE_PATH}}
