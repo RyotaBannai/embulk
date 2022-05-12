@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  embulk:
+    container_name: embulk_test
+    build:
+      context: ./docker/embulk
+      dockerfile: Dockerfile
+    env_file:
+      - ./docker/embulk/.env
+    volumes:
+      - ./docker/embulk/:/app/
+    ports:
+      - 8000:8000
+    stdin_open: true
+    depends_on:
+      - db
+  db:
+    image: mysql:5.7
+    container_name: mysql_host
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bulk_db
+      MYSQL_USER: bulk_user
+      MYSQL_PASSWORD: pw
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/db/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306

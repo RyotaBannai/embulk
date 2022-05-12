@@ -1,0 +1,24 @@
+in:
+  type: file
+  path_prefix: {{env.IN_FILE_PATH}}
+  parser:
+    charset: UTF-8
+    newline: LF
+    type: csv
+    delimiter: "\t"
+    quote: '"'
+    escape: '"'
+    trim_if_not_quoted: false
+    skip_header_lines: 0
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns: {{env.IN_COLUMNS}}
+out:
+  type: mysql
+  host: {{env.HOST}}
+  database: {{env.DB}}
+  table: {{env.TABLE}}
+  user: {{env.USER}}
+  password: {{env.PASSWORD}}
+  stop_on_invalid_record: 0
+  mode: truncate_insert
